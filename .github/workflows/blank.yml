@@ -41,7 +41,7 @@ jobs:
         for URL in "${SITES[@]}"; do
         echo "🌐 Visiting $URL ..."
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
-        --headless --screenshot /tmp/ss_$(date +%s).png "$URL" &
+        --headless --screenshot /tmp/ss_$(date +%s).png "$URL"
         wait $!
         sleep 1
         Done
