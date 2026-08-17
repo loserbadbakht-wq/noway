@@ -15,7 +15,29 @@ jobs:
         sudo apt update
         sudo apt install yt-dlp
         sudo apt install ffmpeg
-    
+    - name: Create Firefox profile at fixed path
+      run: |
+        mkdir -p ${{ runner.temp }}/my_profile
+        firefox -profile ${{ runner.temp }}/my_profile --headless &
+        sleep 5
+        pkill -f "firefox.*my_profile" || true
+        echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
+    - name: Visit a site to generate cookies
+      run: |
+        firefox -profile /home/runner/work/_temp/my_profile --headless https://youtube.com &
+        sleep 5
+        pkill firefox || true
+    - name: Convert cookies.sqlite to cookies.txt
+      run: |
+        sqlite3 -separator $'\t' /home/runner/work/_temp/my_profile/cookies.sqlite \
+          "SELECT host, 
+                  CASE WHEN host LIKE '.%' THEN 'TRUE' ELSE 'FALSE' END, 
+                  path, 
+                  CASE WHEN isSecure THEN 'TRUE' ELSE 'FALSE' END, 
+                  expiry, 
+                  name, 
+                  value 
+                  FROM moz_cookies;" > cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
