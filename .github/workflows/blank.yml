@@ -24,7 +24,7 @@ jobs:
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
     - name: Install cookie_extractor
       run: |
-        gem install cookie_extractor
+        sudo gem install cookie_extractor
     - name: convert cookies.sqlite to cookies.txt
       run: |
         cookie_extractor /home/runner/work/_temp/my_profile/cookies.sqlite > cookies.txt
