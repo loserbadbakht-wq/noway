@@ -15,3 +15,16 @@ jobs:
         sudo apt update
         sudo apt install yt-dlp
         sudo apt install ffmpeg
+    - name: download latest genshin jp video
+      run: |
+        yt-dlp \
+        --playlist-items 1 \
+        -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
+        --merge-output-format webm \
+        --no-overwrites \
+        -f "bestvideo[codec~=vp9][height<=720]+bestaudio[codec~=opus]/bestvideo[codec~=vp9][height<=720]+bestaudio/best" \
+        --write-subs \
+         --sub-lang en \
+         --sub-format srt \
+        --write-auto-subs \
+        "https://www.youtube.com/@ChannelName"
