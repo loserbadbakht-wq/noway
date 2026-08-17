@@ -33,7 +33,7 @@ jobs:
         --headless --screenshot /tmp/screenshot.png https://wikipedia.org \
         --headless --screenshot /tmp/screenshot.png https://ebay.com \
         --headless --screenshot /tmp/screenshot.png https://cnn.com \
-        --headless --screenshot /tmp/screenshot.png https://weather.com \
+        --headless --screenshot /tmp/screenshot.png https://weather.com 
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
