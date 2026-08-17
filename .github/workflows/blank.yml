@@ -18,7 +18,10 @@ jobs:
     - name: Create Firefox profile at fixed path
       run: |
         mkdir -p ${{ runner.temp }}/my_profile
-        firefox -CreateProfile "ci-profile ${{ runner.temp }}/my_profile"
+        firefox -profile ${{ runner.temp }}/my_profile --headless &
+        sleep 5
+        pkill -f "firefox.*my_profile" || true
+        echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
     - name: download latest genshin jp video
       run: |
         yt-dlp \
