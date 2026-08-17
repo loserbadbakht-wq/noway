@@ -27,13 +27,13 @@ jobs:
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
         --headless --screenshot /tmp/screenshot.png https://google.com \
-        --headless --screenshot /tmp/screenshot.png https://facebook.com \
-        --headless --screenshot /tmp/screenshot.png https://amazon.com \
-        --headless --screenshot /tmp/screenshot.png https://x.com \
-        --headless --screenshot /tmp/screenshot.png https://wikipedia.org \
-        --headless --screenshot /tmp/screenshot.png https://ebay.com \
-        --headless --screenshot /tmp/screenshot.png https://cnn.com \
-        --headless --screenshot /tmp/screenshot.png https://weather.com 
+        --headless --screenshot /tmp/screenshot1.png https://facebook.com \
+        --headless --screenshot /tmp/screenshot2.png https://amazon.com \
+        --headless --screenshot /tmp/screenshot3.png https://x.com \
+        --headless --screenshot /tmp/screenshot4.png https://wikipedia.org \
+        --headless --screenshot /tmp/screenshot6.png https://ebay.com \
+        --headless --screenshot /tmp/screenshot6.png https://cnn.com \
+        --headless --screenshot /tmp/screenshot7.png https://weather.com 
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
