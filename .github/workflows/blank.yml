@@ -22,13 +22,29 @@ jobs:
         sleep 5
         pkill -f "firefox.*my_profile" || true
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
-    - name: Visit a site to generate cookies
-      run: |
     - name: Visit site with Firefox (headless + screenshot)
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
+        SITES=(
+          "https://google.com"
+          "https://youtube.com"
+          "https://facebook.com"
+          "https://amazon.com"
+          "https://twitter.com"
+          "https://reddit.com"
+          "https://wikipedia.org"
+          "https://ebay.com"
+          "https://cnn.com"
+          "https://weather.com"
+        )
+
+        for URL in "${SITES[@]}"; do
+        echo "🌐 Visiting $URL ..."
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
-        --headless --screenshot /tmp/screenshot.png https://youtube.com
+        --headless --screenshot /tmp/ss_$(date +%s).png "$URL" &
+        wait $!
+        sleep 1
+        Done
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
