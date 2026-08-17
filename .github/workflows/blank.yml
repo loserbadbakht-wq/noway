@@ -37,7 +37,7 @@ jobs:
                   expiry, 
                   name, 
                   value 
-                  FROM moz_cookies;" > cookies.txt
+                  FROM moz_cookies;" > /home/runner/work/_temp/my_profile/cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
@@ -50,5 +50,5 @@ jobs:
         --sub-lang en \
         --sub-format srt \
         --write-auto-subs \
-        --cookies-from-browser firefox \
+        --cookies /home/runner/work/_temp/my_profile/cookies.txt \
         "https://www.youtube.com/@Genshin_JP"
