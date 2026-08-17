@@ -44,6 +44,11 @@ jobs:
 
         echo "Cookies exported to $OUTPUT"
         cat "$OUTPUT"
+    - name: Check cookies.txt format
+      run: |
+       head -3 /home/runner/work/_temp/my_profile/cookies.txt
+       echo "---"
+       wc -l /home/runner/work/_temp/my_profile/cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
