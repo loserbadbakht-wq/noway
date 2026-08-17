@@ -22,6 +22,12 @@ jobs:
         sleep 5
         pkill -f "firefox.*my_profile" || true
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
+    - name: Install cookie_extractor
+      run: |
+        gem install cookie_extractor
+    - name: convert cookies.sqlite to cookies.txt
+      run: |
+        cookie_extractor /path/to/firefox/cookies.sqlite > cookies.txt
     - name: download latest genshin jp video
       run: |
         yt-dlp \
