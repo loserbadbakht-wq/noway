@@ -27,4 +27,4 @@ jobs:
          --sub-lang en \
          --sub-format srt \
         --write-auto-subs \
-        "https://www.youtube.com/@ChannelName"
+        "https://www.youtube.com/@Genshin_JP"
