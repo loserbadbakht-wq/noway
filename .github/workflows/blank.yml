@@ -25,14 +25,14 @@ jobs:
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         sqlite3 -separator $'\t' /home/runner/work/_temp/my_profile/cookies.sqlite \
-          "SELECT domain, 
-                  CASE WHEN isSecure THEN 'TRUE' ELSE 'FALSE' END, 
+          "SELECT host, 
+                  CASE WHEN host LIKE '.%' THEN 'TRUE' ELSE 'FALSE' END, 
                   path, 
                   CASE WHEN isSecure THEN 'TRUE' ELSE 'FALSE' END, 
                   expiry, 
                   name, 
                   value 
-           FROM moz_cookies;" > cookies.txt
+                  FROM moz_cookies;" > cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
@@ -45,5 +45,5 @@ jobs:
         --sub-lang en \
         --sub-format srt \
         --write-auto-subs \
-        --cookies-from-browser firefox /home/runner/work/_temp/my_profile/cookies.txt \
+        --cookies-from-browser firefox \
         "https://www.youtube.com/@Genshin_JP"
