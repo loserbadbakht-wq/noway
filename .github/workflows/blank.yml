@@ -25,26 +25,15 @@ jobs:
     - name: Visit site with Firefox (headless + screenshot)
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
-        SITES=(
-          "https://google.com"
-          "https://youtube.com"
-          "https://facebook.com"
-          "https://amazon.com"
-          "https://twitter.com"
-          "https://reddit.com"
-          "https://wikipedia.org"
-          "https://ebay.com"
-          "https://cnn.com"
-          "https://weather.com"
-        )
-
-        for URL in "${SITES[@]}"; do
-        echo "🌐 Visiting $URL ..."
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
-        --headless --screenshot /tmp/ss_$(date +%s).png "$URL"
-        wait $!
-        sleep 1
-        Done
+        --headless --screenshot /tmp/screenshot.png https://google.com \
+        --headless --screenshot /tmp/screenshot.png https://facebook.com \
+        --headless --screenshot /tmp/screenshot.png https://amazon.com \
+        --headless --screenshot /tmp/screenshot.png https://x.com \
+        --headless --screenshot /tmp/screenshot.png https://wikipedia.org \
+        --headless --screenshot /tmp/screenshot.png https://ebay.com \
+        --headless --screenshot /tmp/screenshot.png https://cnn.com \
+        --headless --screenshot /tmp/screenshot.png https://weather.com \
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
