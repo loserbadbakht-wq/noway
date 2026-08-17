@@ -24,11 +24,56 @@ jobs:
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
     - name: Visit a site to generate cookies
       run: |
-    - name: Visit site with Firefox (headless + screenshot)
+    - name: Visit site with Firefox 
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
         --headless --screenshot /tmp/screenshot.png https://youtube.com
+    - name: Visit site with Firefox 2
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://google.com
+    - name: Visit site with Firefox 3
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://facebook.com     
+    - name: Visit site with Firefox 4
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://amazon.com
+    - name: Visit site with Firefox 5
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://twitter.com
+    - name: Visit site with Firefox 6
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://reddit.com
+    - name: Visit site with Firefox 7
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://wikipedia.org
+    - name: Visit site with Firefox 8
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://ebay.com
+    - name: Visit site with Firefox 
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://cnn.com
+    - name: Visit site with Firefox 
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot.png https://weather.com
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
