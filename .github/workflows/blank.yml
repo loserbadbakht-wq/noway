@@ -29,7 +29,10 @@ jobs:
         pkill firefox || true
     - name: Convert cookies.sqlite to cookies.txt
       run: |
-        sqlite3 -separator $'\t' /home/runner/work/_temp/my_profile/cookies.sqlite \
+        DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
+        OUTPUT="/home/runner/work/_temp/my_profile/cookies.txt"
+        echo "# Netscape HTTP Cookie File" > "$OUTPUT"
+        sqlite3 -separator $'\t' "$DB" \
           "SELECT host, 
                   CASE WHEN host LIKE '.%' THEN 'TRUE' ELSE 'FALSE' END, 
                   path, 
@@ -37,7 +40,10 @@ jobs:
                   expiry, 
                   name, 
                   value 
-                  FROM moz_cookies;" > /home/runner/work/_temp/my_profile/cookies.txt
+                  FROM moz_cookies;" >> "$OUTPUT"
+
+        echo "Cookies exported to $OUTPUT"
+        cat "$OUTPUT"
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
