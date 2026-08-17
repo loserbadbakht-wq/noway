@@ -24,7 +24,7 @@ jobs:
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
     - name: Visit a site to generate cookies
       run: |
-        firefox -profile /home/runner/work/_temp/my_profile --headless https://youtube.com &
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile --headless https://youtube.com &
         sleep 5
         pkill firefox || true
     - name: Convert cookies.sqlite to cookies.txt
