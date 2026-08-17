@@ -24,7 +24,8 @@ jobs:
         --no-overwrites \
         -f "bestvideo[codec~=vp9][height<=720]+bestaudio[codec~=opus]/bestvideo[codec~=vp9][height<=720]+bestaudio/best" \
         --write-subs \
-         --sub-lang en \
-         --sub-format srt \
+        --sub-lang en \
+        --sub-format srt \
         --write-auto-subs \
+        --cookies-from-browser \
         "https://www.youtube.com/@Genshin_JP"
