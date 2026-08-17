@@ -22,11 +22,13 @@ jobs:
         sleep 5
         pkill -f "firefox.*my_profile" || true
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
+    - name: Visit a site to generate cookies
+      run: |
     - name: Visit site with Firefox (headless + screenshot)
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
-        --headless --screenshot /tmp/screenshot.png https://youtube.com \ 
+        --headless --screenshot /tmp/screenshot.png https://youtube.com
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
@@ -41,7 +43,6 @@ jobs:
                   name, 
                   value 
                   FROM moz_cookies;" >> "$OUTPUT"
-
         echo "Cookies exported to $OUTPUT"
         cat "$OUTPUT"
     - name: Check cookies.txt format
