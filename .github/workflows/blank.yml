@@ -64,12 +64,12 @@ jobs:
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
         --headless --screenshot /tmp/screenshot.png https://ebay.com
-    - name: Visit site with Firefox 
+    - name: Visit site with Firefox 9
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
         --headless --screenshot /tmp/screenshot.png https://cnn.com
-    - name: Visit site with Firefox 
+    - name: Visit site with Firefox 10
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
