@@ -7,11 +7,10 @@ jobs:
     name: Run
 
     runs-on: ubuntu-latest
-
-
     steps:
     - name: Install dependencies
       run: |
         sudo add-apt-repository ppa:tomtomtom/yt-dlp
         sudo apt update
         sudo apt install yt-dlp
+        sudo apt install ffmpeg
