@@ -30,7 +30,7 @@ jobs:
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
-        --extractor-args 'invidious:instance=https://inv.nadeko.net;use_webpage=0'
+        --extractor-args "invidious:instance=https://inv.nadeko.net;use_webpage=0" \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
         --merge-output-format webm \
         --no-overwrites \
