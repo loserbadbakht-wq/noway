@@ -24,6 +24,9 @@ jobs:
           echo "Latest video URL: $LATEST_URL"
           echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
     
+    - name: Use the video URL
+      run: |
+          echo "The latest video is at: ${{ steps.fetch_video.outputs.video_url }}"
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
