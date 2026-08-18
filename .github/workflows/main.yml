@@ -30,3 +30,12 @@ jobs:
       - name: Use the video URL
         run: |
           echo "The latest video is at: ${{ steps.fetch_video.outputs.video_url }}"
+          curl -X POST https://cobalt-api.meowing.de/ \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -d '{
+          "url": "{{ steps.fetch_video.outputs.video_url }}",
+          "videoQuality": "720",
+          "audioFormat": "mp3",
+          "downloadMode": "audio"
+          }'
