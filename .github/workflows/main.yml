@@ -28,12 +28,7 @@ jobs:
         run: |
           # Use curl to get the RSS feed, extract the first entry's video link
           LATEST_URL=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg" \
-            | sed -n '/<entry>/,/<\/entry>/p' \
-            | head -1 \
-            | grep -o '<link rel="alternate" href="[^"]*"' \
-            | head -1 \
-            | sed 's/<link rel="alternate" href="//' \
-            | sed 's/"//')
+            | awk '/<entry>/{flag=1; next} flag && /<link rel="alternate" href="/{match($0, /href="([^"]*)"/, a); print a[1]; exit}')
           
           echo "Latest video URL: $LATEST_URL"
           echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
