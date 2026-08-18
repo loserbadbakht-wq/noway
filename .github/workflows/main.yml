@@ -1,4 +1,4 @@
-name: Download Latest YouTube Vidoe
+name: Download Latest YouTube Video
 
 on:
   workflow_dispatch:
