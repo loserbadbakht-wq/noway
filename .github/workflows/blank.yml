@@ -35,12 +35,13 @@ jobs:
     
     - name: Write cookies.txt from secret
       run: |
-        echo "${{ secrets.MY_COOKIES_OK }}" > cookies.txt
+        printf '%s' "${{ secrets.MY_COOKIES_OK }}" > /tmp/cookies.txt
+    
     - name: Check cookies.txt format
       run: |
-       head -3 cookies.txt
+       head -3 /tmp/cookies.txt
        echo "---"
-       wc -l cookies.txt
+       wc -l /tmp/cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
@@ -52,5 +53,5 @@ jobs:
         --sub-lang en \
         --sub-format srt \
         --write-auto-subs \
-        --cookies cookies.txt \
+        --cookies /tmp/cookies.txt \
         "${{ steps.fetch_video.outputs.video_url }}"
