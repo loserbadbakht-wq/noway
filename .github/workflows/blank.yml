@@ -95,6 +95,12 @@ jobs:
        head -3 /home/runner/work/_temp/my_profile/cookies.txt
        echo "---"
        wc -l /home/runner/work/_temp/my_profile/cookies.txt
+    - name: Show all cookie domains
+      run: |
+        echo "🏷️ Unique domains in cookies.txt:"
+        cut -f1 /home/runner/work/_temp/my_profile/cookies.txt | sort -u | grep -v "^#"
+        echo ""
+        echo "📊 Total cookie count: $(($(wc -l < /home/runner/work/_temp/my_profile/cookies.txt) - 1))"
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
