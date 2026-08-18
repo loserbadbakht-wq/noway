@@ -1,0 +1,32 @@
+name: Get Latest YouTube Video URL
+
+on:
+  workflow_dispatch:   # Manual trigger – you can also use schedule, push, etc.
+
+jobs:
+  get-latest-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set the channel ID as a secret or environment variable.
+      # Replace with your channel ID (not username).
+      - name: Fetch latest video URL from RSS feed
+        id: fetch_video
+        run: |
+          # Use curl to get the RSS feed, extract the first entry's video link
+          LATEST_URL=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg" \
+            | grep -o '<link rel="alternate" href="[^"]*"' \
+            | head -1 \
+            | sed 's/<link rel="alternate" href="//' \
+            | sed 's/"//')
+          
+          echo "Latest video URL: $LATEST_URL"
+          echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
+
+      # Example: use the URL in a subsequent step
+      - name: Use the video URL
+        run: |
+          echo "The latest video is at: ${{ steps.fetch_video.outputs.video_url }}"
