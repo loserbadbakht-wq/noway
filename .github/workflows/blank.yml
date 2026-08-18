@@ -32,33 +32,15 @@ jobs:
           echo "Latest video URL: $LATEST_URL"
           echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
     
-    - name: Convert cookies.sqlite to cookies.txt
+    
+    - name: Write cookies.txt from secret
       run: |
-        DB=""
-        OUTPUT="/home/runner/work/_temp/my_profile/cookies.txt"
-        echo "# Netscape HTTP Cookie File" > "$OUTPUT"
-        sqlite3 -separator $'\t' "$DB" \
-          "SELECT host, 
-                  CASE WHEN host LIKE '.%' THEN 'TRUE' ELSE 'FALSE' END, 
-                  path, 
-                  CASE WHEN isSecure THEN 'TRUE' ELSE 'FALSE' END, 
-                  expiry, 
-                  name, 
-                  value 
-                  FROM moz_cookies;" >> "$OUTPUT"
-        echo "Cookies exported to $OUTPUT"
-        cat "$OUTPUT"
+        echo "${{ secrets.MY_COOKIES_OK }}" > cookies.txt
     - name: Check cookies.txt format
       run: |
-       head -3 /home/runner/work/_temp/my_profile/cookies.txt
+       head -3 cookies.txt
        echo "---"
-       wc -l /home/runner/work/_temp/my_profile/cookies.txt
-    - name: Show all cookie domains
-      run: |
-        echo "🏷️ Unique domains in cookies.txt:"
-        cut -f1 /home/runner/work/_temp/my_profile/cookies.txt | sort -u | grep -v "^#"
-        echo ""
-        echo "📊 Total cookie count: $(($(wc -l < /home/runner/work/_temp/my_profile/cookies.txt) - 1))"
+       wc -l cookies.txt
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
@@ -70,5 +52,5 @@ jobs:
         --sub-lang en \
         --sub-format srt \
         --write-auto-subs \
-        --cookies /home/runner/work/_temp/my_profile/cookies.txt \
+        --cookies cookies.txt \
         "${{ steps.fetch_video.outputs.video_url }}"
