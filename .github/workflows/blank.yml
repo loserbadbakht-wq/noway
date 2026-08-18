@@ -15,6 +15,17 @@ jobs:
         sudo apt update
         sudo apt install yt-dlp
         sudo apt install ffmpeg
+    
+    - name: Fetch latest video URL from RSS feed
+      id: fetch_video
+      run: |
+          # Use curl to get the RSS feed, extract the first entry's video link
+          LATEST_URL=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg" \
+            | awk '/<entry>/{flag=1; next} flag && /<link rel="alternate" href="/{match($0, /href="([^"]*)"/, a); print a[1]; exit}')
+          
+          echo "Latest video URL: $LATEST_URL"
+          echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
+    
     - name: Create Firefox profile at fixed path
       run: |
         mkdir -p ${{ runner.temp }}/my_profile
@@ -22,8 +33,10 @@ jobs:
         sleep 5
         pkill -f "firefox.*my_profile" || true
         echo "Cookie path: ${{ runner.temp }}/my_profile/cookies.sqlite"
+    
     - name: Visit a site to generate cookies
       run: |
+    
     - name: Visit site with Firefox 
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
