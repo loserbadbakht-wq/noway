@@ -73,7 +73,32 @@ jobs:
       run: |
         mkdir -p /home/runner/work/_temp/my_profile
         xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
-        --headless --screenshot /tmp/screenshot10.png https://weather.com
+        --headless --screenshot /tmp/screenshot10.png https://www.babesandgirls.com/galleries
+    - name: Visit site with Firefox 11
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot11.png https://xhamster.com/tags/nude-women
+    - name: Visit site with Firefox 12
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot12.png https://www.eroticbeauties.net/newest/
+    - name: Visit site with Firefox 13
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot13.png https://www.xnxx.com/
+    - name: Visit site with Firefox 14
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot14.png https://genshin-impact.fandom.com/wiki/Genshin_Impact_Wiki
+    - name: Visit site with Firefox 15
+      run: |
+        mkdir -p /home/runner/work/_temp/my_profile
+        xvfb-run -a firefox -profile /home/runner/work/_temp/my_profile \
+        --headless --screenshot /tmp/screenshot15.png https://www.pinterest.com/aliaharuhi/genshin-impact/
     - name: Convert cookies.sqlite to cookies.txt
       run: |
         DB="/home/runner/work/_temp/my_profile/cookies.sqlite"
