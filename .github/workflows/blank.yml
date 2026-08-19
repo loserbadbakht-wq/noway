@@ -27,6 +27,15 @@ jobs:
     - name: Use the video URL
       run: |
           echo "The latest video is at: ${{ steps.fetch_video.outputs.video_url }}"
+    - name: Filter extractors for Invidious
+      run: |
+          echo "Fetching yt-dlp extractors and filtering for 'invidious'..."
+          RESULT=$(yt-dlp --list-extractors | grep -i invidious)
+          echo "Result:"
+          echo "$RESULT"
+          if [ -z "$RESULT" ]; then
+            echo "No Invidious-related extractors found."
+          fi
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
