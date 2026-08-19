@@ -64,7 +64,7 @@ jobs:
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
         --merge-output-format webm \
         --no-overwrites \
-        -f "bestvideo[codec~=vp9][height<=720]+bestaudio[codec~=opus]/bestvideo[codec~=vp9][height<=720]+bestaudio/best" \
+        -f "bv*[height<=720]+ba/b" \
         --write-subs \
         --sub-lang en \
         --sub-format srt \
