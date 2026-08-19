@@ -15,9 +15,6 @@ jobs:
         id: fetch_video
         run: |
           FEED=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg")
-
-          # Extract all hrefs, keep only those with "/watch?v=" (real videos),
-          # exclude shorts, and take the first one (most recent).
           LATEST_URL=$(echo "$FEED" \
             | grep -o 'href="[^"]*"' \
             | sed 's/href="//;s/"//' \
