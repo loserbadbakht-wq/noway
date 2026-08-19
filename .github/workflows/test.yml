@@ -1,0 +1,39 @@
+name: Get Latest Non-Short YouTube Video
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-latest-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch latest non-Short video URL
+        id: fetch_video
+        env:
+          CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
+        run: |
+          # Extract all video links from the feed, then pick the first one that is NOT a Short
+          LATEST_URL=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}" \
+            | awk '/<link rel="alternate" href="/{match($0, /href="([^"]*)"/, a); print a[1]}' \
+            | grep -v "/shorts/" \
+            | head -1)
+          
+          if [ -z "$LATEST_URL" ]; then
+            echo "No regular video found in the feed"
+            echo "video_url=" >> $GITHUB_OUTPUT
+          else
+            echo "Latest regular video URL: $LATEST_URL"
+            echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Use the video URL
+        run: |
+          if [ -z "${{ steps.fetch_video.outputs.video_url }}" ]; then
+            echo "No regular video available"
+          else
+            echo "URL: ${{ steps.fetch_video.outputs.video_url }}"
+          fi
