@@ -9,10 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
+    
+    - name: Setup yt-dlp
+      uses: AnimMouse/setup-yt-dlp@v3
+    
     - name: Install dependencies
       run: |
-        sudo apt-get install -y ffmpeg
-        pip install -q -U "yt-dlp[default]" yt-dlp-ejs bgutil-ytdlp-pot-provider
+        pip install -q -U bgutil-ytdlp-pot-provider
         git clone --depth 1 --branch 1.3.1 \
         https://github.com/Brainicism/bgutil-ytdlp-pot-provider.git \
         /tmp/bgutil
