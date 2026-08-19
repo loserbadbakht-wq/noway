@@ -30,16 +30,24 @@ jobs:
       run: |
         node /tmp/bgutil/server/build/main.js &
         sleep 5
-    - name: Fetch latest video URL from RSS feed
+    - name: Fetch latest non-Short video URL
       id: fetch_video
       run: |
-          # Use curl to get the RSS feed, extract the first entry's video link
-          LATEST_URL=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg" \
-            | awk '/<entry>/{flag=1; next} flag && /<link rel="alternate" href="/{match($0, /href="([^"]*)"/, a); print a[1]; exit}')
-          
-          echo "Latest video URL: $LATEST_URL"
-          echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
-    
+          FEED=$(curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=UCAVR6Q0YgYa8xwz8rdg9Mrg")
+          LATEST_URL=$(echo "$FEED" \
+            | grep -o 'href="[^"]*"' \
+            | sed 's/href="//;s/"//' \
+            | grep "/watch?v=" \
+            | grep -v "/shorts/" \
+            | head -1)
+
+          if [[ -z "$LATEST_URL" ]]; then
+            echo "No regular video found (feed empty or all are Shorts)."
+            echo "video_url=" >> $GITHUB_OUTPUT
+          else
+            echo "Latest regular video URL: $LATEST_URL"
+            echo "video_url=$LATEST_URL" >> $GITHUB_OUTPUT
+          fi
     
     - name: Write cookies.txt from secret
       run: |
