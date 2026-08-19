@@ -30,12 +30,9 @@ jobs:
     - name: Filter extractors for Invidious
       run: |
           echo "Fetching yt-dlp extractors and filtering for 'invidious'..."
-          RESULT=$(yt-dlp --list-extractors | grep -i invidious)
+          RESULT=$(yt-dlp --list-extractors)
           echo "Result:"
           echo "$RESULT"
-          if [ -z "$RESULT" ]; then
-            echo "No Invidious-related extractors found."
-          fi
     - name: Download latest genshin jp video
       run: |
         yt-dlp \
