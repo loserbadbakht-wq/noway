@@ -62,7 +62,6 @@ jobs:
       run: |
         yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
-        --merge-output-format webm \
         --no-overwrites \
         -f "bv*[height<=720][vcodec!*=av01]+ba / b[height<=720][vcodec!*=av01]" \
         --write-subs \
