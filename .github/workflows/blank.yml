@@ -63,11 +63,11 @@ jobs:
         yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
         --no-overwrites \
-        -f "bv*[height<=720]+ba/b" \
+        -f "bv*[height<=720][vcodec!=av1]+ba / b[height<=720][vcodec!=av1]" \
         --write-subs \
         --sub-lang en \
-        --sub-format srt \
         --write-auto-subs \
+        --embed-subs \
         --cookies /tmp/cookies.txt \
         "${{ steps.fetch_video.outputs.video_url }}"
     - name: Configure Git
