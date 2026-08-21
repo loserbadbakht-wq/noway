@@ -59,8 +59,9 @@ jobs:
        echo "---"
        wc -l /tmp/cookies.txt
     - name: Download latest genshin jp video
+      id: download_video
       run: |
-        yt-dlp \
+        file_path=$(yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
         --no-overwrites \
         -f "bv*[height<=720][vcodec!*=av01]+ba / b[height<=720][vcodec!*=av01]" \
@@ -70,11 +71,16 @@ jobs:
         --write-auto-subs \
         --embed-subs \
         --cookies /tmp/cookies.txt \
-        "${{ steps.fetch_video.outputs.video_url }}"
+        "${{ steps.fetch_video.outputs.video_url }}")
+        echo "downloaded_file=$file_path" >> $GITHUB_OUTPUT
     - name: Process video with FFmpeg
       run: |
-        VIDEO="${{ steps.get_filename.outputs.video_path }}"
+        VIDEO="${{ steps.download_video.outputs.downloaded_file }}"
         if [ -f "$VIDEO" ]; then
+          DIR=$(dirname "$VIDEO")                    
+          BASENAME=$(basename "$VIDEO")               
+          BASENAME_NOEXT="${BASENAME%.*}"            
+          mkdir -p "$DIR/hardsub"  
           ffmpeg -i "$VIDEO" -vf subtitles="filename='$VIDEO':force_style='FontSize=20,FontName=Arial'" -c:v libx264 -x264-params crf=22 -preset fast -profile:v high "${VIDEO%.*}_hardsubbed.mp4"
         else
           echo "⚠️ Video file not found – download may have been skipped."
