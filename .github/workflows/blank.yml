@@ -62,6 +62,7 @@ jobs:
       run: |
         yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
+        --merge-output-format mp4
         --no-overwrites \
         -f "bv*[height<=720][vcodec!=av1]+ba / b[height<=720][vcodec!=av1]" \
         --write-subs \
