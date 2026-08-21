@@ -1,6 +1,7 @@
 name: omg
 
 on:
+  schedule:
   workflow_dispatch: 
 jobs:
   build:
@@ -92,7 +93,7 @@ jobs:
           BASENAME=$(basename "$VIDEO")               
           BASENAME_NOEXT="${BASENAME%.*}"            
           mkdir -p "$DIR/hardsub"  
-          ffmpeg -i "$VIDEO" -vf subtitles="filename='$VIDEO':force_style='FontSize=20,FontName=Arial'" -c:v libx264 -x264-params crf=22 -preset fast -profile:v high "${VIDEO%.*}_hardsubbed.mp4"
+          ffmpeg -i "$VIDEO" -vf subtitles="filename='$VIDEO':force_style='FontSize=20,FontName=Arial'" -c:v libx264 -x264-params crf=22 -preset fast -profile:v high "hardsub/${VIDEO%.*}_hardsubbed.mp4"
         else
           echo "⚠️ Video file not found – download may have been skipped."
         fi
