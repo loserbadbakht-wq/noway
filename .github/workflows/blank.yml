@@ -62,11 +62,12 @@ jobs:
       run: |
         yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
-        --merge-output-format mp4
+        --merge-output-format mp4 \
         --no-overwrites \
         -f "bv*[height<=720][vcodec!=av1]+ba / b[height<=720][vcodec!=av1]" \
         --write-subs \
         --sub-lang en \
+        --sub-format srt \
         --write-auto-subs \
         --embed-subs \
         --cookies /tmp/cookies.txt \
