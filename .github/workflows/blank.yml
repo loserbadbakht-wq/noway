@@ -59,23 +59,34 @@ jobs:
        echo "---"
        wc -l /tmp/cookies.txt
     - name: Download latest genshin jp video
-      id: download_video
+      id: download
       run: |
-        file_path=$(yt-dlp \
+        START_TIME=$(date +%s)
+        echo "start_time=$START_TIME" >> $GITHUB_OUTPUT
+        yt-dlp \
         -o "%(channel)s/%(upload_date)s - %(title)s.%(ext)s" \
         --no-overwrites \
         -f "bv*[height<=720][vcodec!*=av01]+ba / b[height<=720][vcodec!*=av01]" \
         --write-subs \
         --sub-lang en \
-        --sub-format srt \
         --write-auto-subs \
         --embed-subs \
         --cookies /tmp/cookies.txt \
-        "${{ steps.fetch_video.outputs.video_url }}")
-        echo "downloaded_file=$file_path" >> $GITHUB_OUTPUT
+        "${{ steps.fetch_video.outputs.video_url }}"
+    - name: Find video file path
+      id: find_video
+      run: |
+        START_TIME=${{ steps.download.outputs.start_time }}
+        VIDEO=$(find . \( -name "*.webm" -o -name "*.mp4" \) -newermt "@$START_TIME" -type f | head -n 1)
+        if [ -z "$VIDEO" ]; then
+          echo "No new video downloaded – skipping FFmpeg"
+          echo "video_path=" >> $GITHUB_OUTPUT
+        else
+          echo "video_path=$VIDEO" >> $GITHUB_OUTPUT
+        fi
     - name: Process video with FFmpeg
       run: |
-        VIDEO="${{ steps.download_video.outputs.downloaded_file }}"
+        VIDEO="${{ steps.find_video.outputs.video_path }}"
         if [ -f "$VIDEO" ]; then
           DIR=$(dirname "$VIDEO")                    
           BASENAME=$(basename "$VIDEO")               
