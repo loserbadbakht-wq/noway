@@ -72,18 +72,7 @@ jobs:
         else
           echo "video_path=$VIDEO" >> $GITHUB_OUTPUT
         fi
-    - name: Process video with FFmpeg
-      run: |
-        VIDEO="${{ steps.find_video.outputs.video_path }}"
-        if [ -f "$VIDEO" ]; then
-          DIR=$(dirname "$VIDEO")                    
-          BASENAME=$(basename "$VIDEO")               
-          BASENAME_NOEXT="${BASENAME%.*}"            
-          mkdir -p "$DIR/hardsub"  
-          ffmpeg -i "$VIDEO" -vf subtitles="filename='$VIDEO':force_style='FontSize=20,FontName=Arial'" -c:v libx264 -x264-params crf=22 -preset fast -profile:v high "${VIDEO%.*}_hardsubbed.mp4" || true
-        else
-          echo "⚠️ Video file not found – download may have been skipped."
-        fi
+    
     - name: Configure Git
       run: |
         git config user.name "github-actions[bot]"
